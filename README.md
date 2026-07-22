@@ -1,10 +1,10 @@
-# Universal AI Agent Rules
+# Universal AI Agents Rules
 
 A universal set of instructions for AI coding agents to ensure consistent, predictable, and minimal-impact changes across software projects.
 
 ## Purpose
 
-This repository provides a technology-agnostic **AGENT.md** that defines how an AI agent should analyze, plan, modify, and document software projects while preserving existing architecture and minimizing unnecessary changes.
+This repository provides a technology-agnostic **AGENTS.md** that defines how an AI agent should analyze, plan, modify, and document software projects while preserving existing architecture and minimizing unnecessary changes.
 
 ## Goals
 
@@ -18,7 +18,7 @@ This repository provides a technology-agnostic **AGENT.md** that defines how an 
 
 ## Contents
 
-The `AGENT.md` includes guidance for:
+The `AGENTS.md` includes guidance for:
 
 - Core operating principles
 - Project analysis
@@ -42,7 +42,7 @@ The `AGENT.md` includes guidance for:
 
 ## Intended Usage
 
-1. Copy `AGENT.md` into the root of your repository.
+1. Copy `AGENTS.md` into the root of your repository.
 2. Allow AI coding assistants to read the file before making changes.
 3. Update the file as your project's standards evolve.
 4. Keep the instructions concise, explicit, and project-specific when necessary.
