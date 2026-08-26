@@ -1,0 +1,8 @@
+{
+  "name": "universal-ai-agents-rules",
+  "version": "1.0.0",
+  "description": "A strict universal skill for Claude Code focused on minimal changes, existing-code reuse, scope protection, explicit planning, documentation consistency, security, testing, and clarification before ambiguous work.",
+  "author": {
+    "name": "Ashish Sharma"
+  }
+}
