@@ -1,6 +1,8 @@
 # Project Rules (AGENTS.project.md)
 
-> Project-specific rules for AI agents. These take priority over the universal `AGENTS.md` (see §23), except for the safety rules in §27–§29 and §33, which can only be overridden by explicit, specific instructions.
+> Project-specific rules for AI agents. These rank above the universal `AGENTS.md` in the priority order defined by Section 23 (Conflict Resolution), and Section 34.1 designates this file as their location. They rank below the user's explicit instructions in the current request.
+>
+> The safety rules in Sections 27, 28, 29, and 33 of `AGENTS.md` cannot be overridden by this file. Only an explicit, specific instruction from the user can override them.
 >
 > Delete any section that does not apply. Keep this file short; agents load it into their context.
 

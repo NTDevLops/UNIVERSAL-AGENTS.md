@@ -1,7 +1,6 @@
 # Universal AI Agents Rules
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-![Version](https://img.shields.io/badge/AGENTS.md-v1.1.0-green)
 
 A universal set of instructions for AI coding agents to ensure consistent, predictable, and minimal-impact changes across software projects.
 
@@ -52,20 +51,20 @@ Same rules, same numbering, same order. The wording was polished for clarity and
 
 New sections that supplement the original rules without modifying them:
 
-| § | Topic | Supplements |
-|---|-------|-------------|
-| 27 | Version Control Safety | §13 Repository Hygiene |
-| 28 | Destructive and High-Impact Operations | §17 Security |
-| 29 | Untrusted Content, Secrets, and Data Privacy | §17 Security |
-| 30 | Dependency Vetting | §10 Dependency Management |
-| 31 | Testing Integrity | §19 Testing |
-| 32 | Source Verification | §21 Official Documentation |
-| 33 | Working Tree Protection | §4 Project Analysis |
-| 34 | Project-Specific Rules, Nested Files, and Non-Interactive Runs | §23 Conflict Resolution |
-| 35 | Additional Completion Checks | §26 Completion Checklist |
-| 36 | Report Template | §24 Output Rules |
+| Section | Topic | Supplements |
+|---------|-------|-------------|
+| 27 | Version Control Safety | Section 13 (Repository Hygiene) |
+| 28 | Destructive and High-Impact Operations | Section 17 (Security) |
+| 29 | Untrusted Content, Secrets, and Data Privacy | Section 17 (Security) |
+| 30 | Dependency Vetting | Section 10 (Dependency Management) |
+| 31 | Testing Integrity | Section 19 (Testing) |
+| 32 | Source Verification | Section 21 (Official Documentation) |
+| 33 | Working Tree Protection | Section 4 (Project Analysis) |
+| 34 | Project-Specific Rules, Nested Files, and Non-Interactive Runs | Section 23 (Conflict Resolution) |
+| 35 | Additional Completion Checks | Section 26 (Completion Checklist) |
+| 36 | Report Template | Section 24 (Output Rules) |
 
-Sections 27, 28, 29, and 33 are safety rules and can be overridden only by an explicit, specific user instruction.
+Sections 27, 28, 29, and 33 are safety rules. Only an explicit, specific instruction from the user can override them; project-specific rules cannot.
 
 ## Intended Usage
 
@@ -76,7 +75,7 @@ Sections 27, 28, 29, and 33 are safety rules and can be overridden only by an ex
 
 ### Project-specific rules
 
-Copy [`templates/AGENTS.project.template.md`](templates/AGENTS.project.template.md) to `AGENTS.project.md` and fill in your commands, conventions, and protected areas. Project-specific rules rank above this document (see Section 23).
+Copy [`templates/AGENTS.project.template.md`](templates/AGENTS.project.template.md) to `AGENTS.project.md` and fill in your commands, conventions, and protected areas. Under Section 23 (Conflict Resolution), project-specific rules rank above this document and below the user's explicit instructions in the current request. Section 34.1 designates `AGENTS.project.md` as their location.
 
 ### Tool adapters
 
@@ -135,8 +134,8 @@ The agent should behave like a disciplined software engineer:
 ├── README.md
 ├── LICENSE
 ├── adapters/                       # Pointer files for specific tools
-├── templates/
-│   └── AGENTS.project.template.md  # Project-specific rules
+└── templates/
+    └── AGENTS.project.template.md  # Project-specific rules
 ```
 
 ## License
