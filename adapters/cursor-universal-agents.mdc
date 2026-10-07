@@ -1,0 +1,16 @@
+---
+description: Universal AI agent rules. Minimal, safe, documented changes.
+alwaysApply: true
+---
+
+Follow all rules in `AGENTS.md` at the repository root before making any change.
+If `AGENTS.project.md` exists, read it as well; its rules take priority over `AGENTS.md`,
+except for the safety rules in sections 27, 28, 29, and 33 of `AGENTS.md`.
+
+Key reminders:
+
+- Make only the changes explicitly requested, and keep them minimal.
+- Search for and reuse existing code before writing new code.
+- Present a plan proportional to the task before implementing.
+- Do not commit, push, or run destructive commands unless explicitly asked.
+- Report verification results accurately; never claim tests passed unless they ran.
