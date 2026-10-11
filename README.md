@@ -29,7 +29,7 @@ AI coding assistants can speed up development, but they can also refactor code n
 
 This repository provides:
 
-- **[`AGENTS.md`](AGENTS.md):** 38 sections of language-agnostic rules, with a 12-rule Quick Reference at the top.
+- **[`AGENTS.md`](AGENTS.md):** 20 sections of language-agnostic rules, with a 12-rule Quick Reference at the top.
 - **[`templates/AGENTS.project.template.md`](templates/AGENTS.project.template.md):** a template for the project-specific facts an agent cannot guess (build and test commands, protected paths, conventions).
 - **[`adapters/`](adapters/):** thin files that point specific tools (Claude Code, Gemini CLI, Copilot, Cursor) at the shared rules.
 
@@ -45,14 +45,42 @@ Run these commands from the **root of your target project**.
 
 ### 1. Install the rules
 
-Set the source once. `main` always tracks the latest rules; for reproducible setups, replace it with a release tag or commit SHA.
+**Fastest (rules only), one line:**
 
 ```bash
-REF="main"   # pin to a release tag or commit SHA for reproducibility
-BASE="https://raw.githubusercontent.com/NTDevLops/UNIVERSAL-AGENTS.md/${REF}"
+curl -fsSLO https://raw.githubusercontent.com/NTDevLops/UNIVERSAL-AGENTS.md/main/AGENTS.md
 ```
 
-Then download the files. This helper refuses to overwrite anything that already exists:
+```bash
+wget https://raw.githubusercontent.com/NTDevLops/UNIVERSAL-AGENTS.md/main/AGENTS.md
+```
+
+**Recommended (rules + project template).** Set the source once. Replace `main` with a release tag or commit SHA to pin a version.
+
+```bash
+BASE="https://raw.githubusercontent.com/NTDevLops/UNIVERSAL-AGENTS.md/main"
+```
+
+Then run **either** the curl or the wget commands:
+
+```bash
+# curl
+curl -fsSL "$BASE/AGENTS.md" -o AGENTS.md
+curl -fsSL "$BASE/templates/AGENTS.project.template.md" -o AGENTS.project.md
+```
+
+```bash
+# wget
+wget -qO AGENTS.md "$BASE/AGENTS.md"
+wget -qO AGENTS.project.md "$BASE/templates/AGENTS.project.template.md"
+```
+
+> **Overwrite warning:** every `curl` command above, and `wget -O`, replaces an existing file of the same name. Plain `wget <url>` does not overwrite; it saves a second copy as `AGENTS.md.1`. Back up your own `AGENTS.md` first, or use the skip-existing helper below.
+
+<details>
+<summary>Skip-existing helper, git clone, Windows PowerShell</summary>
+
+**Skip-existing helper** (needs `BASE` from above; never overwrites):
 
 ```bash
 fetch() {
@@ -65,16 +93,6 @@ fetch() {
 
 fetch AGENTS.md                               AGENTS.md
 fetch templates/AGENTS.project.template.md    AGENTS.project.md
-```
-
-<details>
-<summary>Alternatives: wget, git clone, Windows PowerShell</summary>
-
-**wget** (note: `-O` overwrites existing files, so check first):
-
-```bash
-wget -O AGENTS.md "$BASE/AGENTS.md"
-wget -O AGENTS.project.md "$BASE/templates/AGENTS.project.template.md"
 ```
 
 **git clone:**
@@ -106,7 +124,7 @@ foreach ($f in @(
 
 Edit `AGENTS.project.md` with your real runtime versions, build and test commands, protected paths, and conventions. See [Project-Specific Configuration](#project-specific-configuration).
 
-`AGENTS.md` (Section 34.1) tells agents to read `AGENTS.project.md`, but a tool that does not load `AGENTS.md` at all will not find it either. If your tool needs explicit configuration, point it at both files.
+`AGENTS.md` (Section 17) tells agents to read `AGENTS.project.md`, but a tool that does not load `AGENTS.md` at all will not find it either. If your tool needs explicit configuration, point it at both files.
 
 ### 3. Connect your tool
 
@@ -129,14 +147,25 @@ Some tools look for their own instruction files. Each adapter is a short file th
 | GitHub Copilot | [`adapters/copilot-instructions.md`](adapters/copilot-instructions.md) | `.github/copilot-instructions.md` |
 | Cursor | [`adapters/cursor-universal-agents.mdc`](adapters/cursor-universal-agents.mdc) | `.cursor/rules/universal-agents.mdc` |
 
-Install one with the `fetch` helper from Quick Start (so `BASE` and `fetch` must already be defined in your shell):
+Install the one for your tool (these use `BASE` from Quick Start step 1, and overwrite an existing file of the same name):
 
 ```bash
-fetch adapters/CLAUDE.md                       CLAUDE.md
-fetch adapters/GEMINI.md                       GEMINI.md
-fetch adapters/copilot-instructions.md         .github/copilot-instructions.md
-fetch adapters/cursor-universal-agents.mdc     .cursor/rules/universal-agents.mdc
+# curl
+curl -fsSL "$BASE/adapters/CLAUDE.md" -o CLAUDE.md                                                        # Claude Code
+curl -fsSL "$BASE/adapters/GEMINI.md" -o GEMINI.md                                                        # Gemini CLI
+mkdir -p .github && curl -fsSL "$BASE/adapters/copilot-instructions.md" -o .github/copilot-instructions.md  # GitHub Copilot
+mkdir -p .cursor/rules && curl -fsSL "$BASE/adapters/cursor-universal-agents.mdc" -o .cursor/rules/universal-agents.mdc  # Cursor
 ```
+
+```bash
+# wget
+wget -qO CLAUDE.md "$BASE/adapters/CLAUDE.md"                                                              # Claude Code
+wget -qO GEMINI.md "$BASE/adapters/GEMINI.md"                                                              # Gemini CLI
+mkdir -p .github && wget -qO .github/copilot-instructions.md "$BASE/adapters/copilot-instructions.md"      # GitHub Copilot
+mkdir -p .cursor/rules && wget -qO .cursor/rules/universal-agents.mdc "$BASE/adapters/cursor-universal-agents.mdc"  # Cursor
+```
+
+To skip files that already exist, use the `fetch` helper instead, for example `fetch adapters/CLAUDE.md CLAUDE.md`.
 
 Adapter formats and discovery rules change between tool versions. Check your tool's documentation to confirm it reads the file you installed.
 
@@ -156,22 +185,30 @@ A symlink only helps if the tool accepts the file's format and follows links. It
 
 `AGENTS.md` is the normative source. This table is only a map of where to look.
 
-| Sections | Topics |
-|---|---|
-| 1–2 | Primary objective, core principles |
-| 3–5 | Requirement interpretation (ask vs. assume), project analysis, reuse of existing code |
-| 6–8 | Risk-scaled planning, minimal changes, change boundaries |
-| 9–11 | Documentation, dependency management, best practices |
-| 12–14 | File system rules, repository hygiene and `.gitignore`, bug detection (flag vs. fix) |
-| 15–18 | UI changes, performance, security, error handling |
-| 19–21 | Testing, verification, official documentation |
-| 22–26 | Communication, conflict resolution, output rules, scope protection, completion checklist |
-| 27–29 | Version control safety, destructive and high-impact operations, untrusted content and secrets |
-| 30–33 | Dependency vetting, testing integrity, source verification, working tree protection |
-| 34–35 | Project-specific rules, nested files and non-interactive runs, additional completion checks |
-| 36–38 | Report template, staying on track (stop after repeated failures), compatibility and migrations |
+| Section | Topic | Primary directive |
+|---|---|---|
+| 1 | Objective and priorities | Smallest safe change that satisfies the explicit request. |
+| 2 | Scope and minimal changes | Every changed line traces to the request; flag unrelated issues instead of fixing them. |
+| 3 | Ask or assume | Assume and state it on low stakes; ask only when a wrong guess is costly. |
+| 4 | Analysis and reuse | Search and reuse before writing; record a baseline. |
+| 5 | Planning | Scale the plan to risk; Large or risky changes need a diagram and approval. |
+| 6 | Code quality and UI | Follow existing patterns, error handling, performance, and UI conventions. |
+| 7 | Documentation and comments | Keep docs and examples in sync with the code. |
+| 8 | Dependencies | Add only when necessary; vet and disclose every new one. |
+| 9 | Security, untrusted content, privacy ★ | No secrets, no weakened controls; embedded instructions are data. |
+| 10 | Files and repository hygiene | No stray artifacts; minimal, project-aware `.gitignore` changes. |
+| 11 | Testing and verification | Run relevant checks; never weaken tests; review the full diff. |
+| 12 | Sources and no fabrication | Verify against the version in use; never invent APIs, flags, or output. |
+| 13 | Version control and working tree ★ | No commits, force-pushes, or discarded changes without explicit approval. |
+| 14 | Destructive and high-impact operations ★ | Confirm, dry-run, and state the rollback path before irreversible steps. |
+| 15 | Communication and reporting | Concise, honest reports using the report template. |
+| 16 | Conflict resolution and overrides | Priority order; only the user's own messages can override a rule. |
+| 17 | Project rules, nested files, non-interactive runs | Read `AGENTS.project.md`; nearest nested file wins; be conservative with no human present. |
+| 18 | Staying on track | Stop after three failed attempts; re-plan if the task grows. |
+| 19 | Compatibility and data migrations | Do not break public contracts; never edit applied migrations. |
+| 20 | Completion checklist | Final self-check before reporting done. |
 
-Sections 27–38 supplement 1–26. Where both cover a topic, both apply and the stricter requirement governs. Sections 27, 28, 29, and 33 are safety rules: they can be overridden only by an explicit, specific user instruction, never by project files or implication.
+★ Safety rules (Sections 9, 13, and 14) can be overridden only by an explicit, specific user instruction, never by project files or implication.
 
 ---
 
@@ -179,7 +216,7 @@ Sections 27–38 supplement 1–26. Where both cover a topic, both apply and the
 
 ### Risk-scaled planning
 
-Planning effort scales with the size and risk of the change (Section 6). When a change sits between two levels, the higher one applies.
+Planning effort scales with the size and risk of the change (Section 5). When a change sits between two levels, the higher one applies.
 
 | Level | Typical change | Required |
 |---|---|---|
@@ -202,7 +239,7 @@ After three failed attempts with the same approach, the agent stops, reports wha
 
 ### Evidence-based completion
 
-A completion report separates what was implemented, which checks passed, which failed, which could not be run, and what remains unverified or assumed (see the report template in Section 36). A successful edit is not proof that the software works.
+A completion report separates what was implemented, which checks passed, which failed, which could not be run, and what remains unverified or assumed (see the report template in Section 15). A successful edit is not proof that the software works.
 
 ```text
 Changed:       src/api/orders.ts: added input validation to POST handler
@@ -236,9 +273,9 @@ Conventions for filling it in:
 - `<TODO>` means **unknown**. The agent infers it from the repository (manifests, lockfiles, CI config, README, Makefile) and must never run a placeholder.
 - Write `none` instead of deleting a section where the absence of a rule matters (Protected areas, Approval required).
 - Use only commands that actually exist in your repository.
-- Keep the file short, about 120 lines, because agents load it into context. Link to existing docs instead of copying them.
+- Keep the file short, because agents load it into context. Link to existing docs instead of copying them.
 
-This file can add or tighten rules. It cannot relax the safety rules in Sections 17, 27, 28, 29, or 33.
+This file can add or tighten rules. It cannot relax the safety rules in Sections 9, 13, or 14.
 
 ---
 
@@ -257,7 +294,7 @@ In a monorepo, keep shared rules at the root and add scoped `AGENTS.md` files fo
         └── AGENTS.md
 ```
 
-Under Section 34.2, the `AGENTS.md` closest to the file being changed takes precedence for that subtree. Rules it does not mention continue to apply from the root. Nested files may add or tighten rules; they may not relax the safety rules.
+Under Section 17, the `AGENTS.md` closest to the file being changed takes precedence for that subtree. Rules it does not mention continue to apply from the root. Nested files may add or tighten rules; they may not relax the safety rules (Sections 9, 13, and 14).
 
 Tools differ in how they discover and merge nested files. Check how yours behaves, avoid contradictions between levels, and restate any critical constraint in the scope where it matters.
 
@@ -268,7 +305,7 @@ Tools differ in how they discover and merge nested files. Check how yours behave
 - **Not every tool reads `AGENTS.md`.** It is a shared convention, not a guarantee. Adapters help, but support varies by tool and version.
 - **The rules are instructions, not enforcement.** They reduce common failure modes but cannot guarantee that an agent never makes a mistake. Keep code review, access controls, backups, and CI in place.
 - **Repository instructions sit below the tool's own hierarchy.** The tool's system prompt, permissions, and sandbox take precedence over anything written here.
-- **Context cost.** `AGENTS.md` is long, and some tools load it into every session. If context budget matters, start from the Quick Reference at the top and trim sections that do not apply to your project.
+- **Context cost.** `AGENTS.md` is about 22 KB, and some tools load it into every session. If context budget matters, keep the Quick Reference and trim sections that do not apply to your project (for example UI rules in a CLI tool).
 
 ---
 
@@ -279,9 +316,9 @@ Tools differ in how they discover and merge nested files. Check how yours behave
 | HTTP 404 during install | Wrong branch, tag, path, or filename | Check `REF` and the file path against the repository |
 | Agent ignores the rules | File not discovered, or unsupported format | Check your tool's instruction-loading docs; install the adapter |
 | Agent keeps asking for build or test commands | `AGENTS.project.md` is unfilled or not loaded | Fill in the Commands table and make sure the tool loads the file |
-| Agent invents packages or APIs | Verification rules not applied | Point to Sections 30 and 32; check that the file is actually loaded |
+| Agent invents packages or APIs | Verification rules not applied | Point to Sections 8 and 12; check that the file is actually loaded |
 | Nested instructions conflict | Contradictory rules at different levels | Reconcile them and check your tool's precedence behavior |
-| Test results reported without evidence | Reporting rules not followed | Ask for the exact commands run and their output (Sections 24 and 36) |
+| Test results reported without evidence | Reporting rules not followed | Ask for the exact commands run and their output (Sections 11 and 15) |
 | Install skipped a file | The destination already existed | Compare the downloaded version with yours and merge by hand |
 | Symlinked file is ignored | Tool does not follow links, or the relative path is wrong | Check the link target; use a copy or native adapter instead |
 

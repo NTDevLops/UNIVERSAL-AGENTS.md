@@ -1,13 +1,13 @@
 # Project Rules (AGENTS.project.md)
 
-> Project-specific rules for AI agents. Per Section 23 of `AGENTS.md`, these rank above the universal rules and existing conventions, and below the user's explicit instructions in the current request. Section 34.1 designates this file as their location.
+> Project-specific rules for AI agents. Per Section 16 of `AGENTS.md`, these rank above existing conventions and the universal rules, and below the safety rules and the user's explicit instructions in the current request. Section 17 designates this file as their location.
 >
-> **Safety limits:** this file may add or tighten rules. It cannot relax Sections 17, 27, 28, 29, or 33 of `AGENTS.md`; only an explicit, specific instruction from the user can do that.
+> **Safety limits:** this file may add or tighten rules. It cannot relax Sections 9, 13, or 14 of `AGENTS.md`; only an explicit, specific instruction from the user can do that.
 >
 > **How to fill this in:**
 > - `<TODO>` means **unknown**. Agents must infer it from the repository (manifests, lockfiles, CI config, README, Makefile) and **must never run or rely on a placeholder**.
 > - Write `none` (do not delete the section) where the absence of a rule matters: Protected areas and Approval required.
-> - Delete sections that genuinely do not apply. Keep this file short (aim for under about 120 lines); agents load it into context. Link to existing docs instead of copying them.
+> - Delete sections that genuinely do not apply. Keep this file short; agents load it into context. Link to existing docs instead of copying them.
 
 Last reviewed: `<TODO: YYYY-MM-DD>` by `<TODO>`
 
@@ -64,7 +64,7 @@ Before reporting a task complete, these must pass (or be reported as not run, wi
 
 ## Change-size calibration
 
-Examples that help classify changes under Section 6 of `AGENTS.md`.
+Examples that help classify changes under Section 5 of `AGENTS.md`.
 
 - **Treat as Trivial:** `<TODO: for example documentation typos, comment fixes>`
 - **Treat as Medium or higher:** `<TODO: for example anything in shared/ or any public type>`
@@ -72,7 +72,7 @@ Examples that help classify changes under Section 6 of `AGENTS.md`.
 
 ## Sensitive areas
 
-Code that handles `<TODO: authentication, payments, personal data, encryption keys>` is always Large or risky under Section 6. Paths: `<TODO or none>`
+Code that handles `<TODO: authentication, payments, personal data, encryption keys>` is always Large or risky under Section 5. Paths: `<TODO or none>`
 
 ## Protected areas
 
@@ -93,14 +93,11 @@ Ask the user before the following (this adds to the universal rules; it does not
 - changing CI/CD, infrastructure, or deployment configuration
 - `<TODO: project-specific item>`
 
-## Dependencies
+## Dependencies and compatibility
 
 - **Preferred or already-approved libraries:** `<TODO>`
 - **Banned or discouraged libraries:** `<TODO: and why>`
 - **License policy:** `<TODO: for example MIT, Apache-2.0, BSD only>`
-
-## Compatibility
-
 - **Supported platforms and versions:** `<TODO: for example Node 18+, iOS 16+, last 2 browser versions>`
 - **Public interfaces that must stay stable:** `<TODO: APIs, CLI flags, file formats, config keys>`
 - **Deprecation policy:** `<TODO>`
@@ -112,7 +109,7 @@ Ask the user before the following (this adds to the universal rules; it does not
 | Local / sandbox | `<TODO: yes>` | |
 | Test / CI | `<TODO>` | |
 | Staging | `<TODO: no, unless the user says so>` | |
-| Production | `no` | Never, per Section 28 of `AGENTS.md` |
+| Production | `no` | Never, per Section 14 of `AGENTS.md` |
 
 ## Testing expectations
 
