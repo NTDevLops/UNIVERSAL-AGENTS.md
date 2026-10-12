@@ -9,5 +9,6 @@ Key reminders:
 - Make only the changes explicitly requested, and keep them minimal.
 - Search for and reuse existing code before writing new code.
 - Plan in proportion to the task's size and risk; wait for approval only on large or risky changes.
+- On low-stakes ambiguity, state an assumption and proceed; ask when correctness, safety, or a costly wrong guess is at stake.
 - Do not commit, push, or run destructive commands unless explicitly asked.
 - Report verification results accurately; never claim tests passed unless they ran.

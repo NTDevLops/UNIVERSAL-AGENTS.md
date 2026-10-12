@@ -17,6 +17,7 @@ Last reviewed: `<TODO: YYYY-MM-DD>` by `<TODO>`
 - **Purpose:** `<TODO: one or two sentences>`
 - **Languages, frameworks, runtimes (with versions):** `<TODO>`
 - **Package manager:** `<TODO>`
+- **Operating system and shell:** `<TODO: for example Ubuntu and bash, Windows and PowerShell>`
 - **Repository type:** `<TODO: single project | monorepo | multi-service>`
 - **Further reading:** `<TODO: links to CONTRIBUTING.md, architecture docs, ADRs>`
 
@@ -88,9 +89,12 @@ Do not modify the following without explicit approval. Write `none` if there are
 
 Ask the user before the following (this adds to the universal rules; it does not replace them). Write `none` if nothing extra applies.
 
+**Strict mode (Section 3):** `<TODO: yes | no; unknown means no>`. If `yes`, always ask and present a plan before making any change, instead of assuming on low stakes.
+
 - adding or upgrading dependencies
 - changing public APIs, schemas, or migrations
 - changing CI/CD, infrastructure, or deployment configuration
+- bumping versions, publishing, or releasing
 - `<TODO: project-specific item>`
 
 ## Dependencies and compatibility
